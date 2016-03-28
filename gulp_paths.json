@@ -1,0 +1,22 @@
+{
+  "html": {
+    "in": "src/**/*.html",
+    "out": "dist"
+  },
+  "img": {
+    "in": "src/i/**/*.{gif,png,jpg,svg}",
+    "out": "dist/i"
+  },
+  "js": {
+    "in": "src/js/**/*.js",
+    "out": "dist/js"
+  },
+  "misc": {
+    "in": "src/**/*.{txt,ico,mp3,woff,woff2,ttf}",
+    "out": "dist"
+  },
+  "sass": {
+    "in": "src/scss/**/*.scss",
+    "out": "dist/css"
+  }
+}

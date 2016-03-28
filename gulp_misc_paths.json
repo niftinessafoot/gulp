@@ -1,0 +1,5 @@
+{
+  "maps": "../maps",
+  "notmaps": "**/*.{js,css}",
+  "sync": "./dist"
+}
