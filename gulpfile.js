@@ -1,7 +1,3 @@
-/*
-Sibling directory doesn't work. Will likely just ahave a repo and copy the few files into web root.
- */
-
 var gulp = require('gulp'),
   gutil = require('gulp-util'),
   changed = require('gulp-changed'),
