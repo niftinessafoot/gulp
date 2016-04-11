@@ -18,6 +18,9 @@ Script assumes this directory structure:
 project
  |-- .git
  |-- src
+ |    |-- scss
+ |    |-- js
+ |    |-- i
  |-- dist
 ```
 The only important directory is `src`, as `dist` will create itself if need be. Version control wherever you want.
