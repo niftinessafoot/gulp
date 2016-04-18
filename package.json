@@ -1,5 +1,5 @@
 {
-  "name": "MDS Site Builder",
+  "name": "gulp_builder",
   "version": "1.0.0",
   "description": "Gulp builder for a number of sites. Sits in the web root. Watches specific site by running `gulp --cwd [foldername]`.",
   "main": "gulpfile.js",
