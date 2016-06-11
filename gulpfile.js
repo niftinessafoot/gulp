@@ -36,9 +36,9 @@ gulp.task("js", function(){
     .pipe(changed(paths.js.out))
     .pipe(sourcemaps.init())
     .pipe(uglify())
-    .on('error',function(obj){
-        gutil.log('ERROR',obj.message,"on line", obj.lineNumber);
-      })
+    .on('error',notify.onError(function(obj){
+        return obj.message + " line " + obj.lineNumber;
+      }))
     .pipe(sourcemaps.write(miscPaths.maps))
     .pipe(gulp.dest(paths.js.out))
     .pipe(browsersync.stream({match : miscPaths.notmaps}));
