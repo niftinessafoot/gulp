@@ -1,5 +1,6 @@
 var gulp = require('gulp'),
   gutil = require('gulp-util'),
+  notify = require('gulp-notify'),
   changed = require('gulp-changed'),
   sass = require('gulp-ruby-sass'),
   autoprefixer = require('gulp-autoprefixer'),
