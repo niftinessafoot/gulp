@@ -21,6 +21,7 @@ project
  |    |-- scss
  |    |-- js
  |    |-- i
+ |    |-- inc
  |-- dist
 ```
 The only important directory is `src`, as `dist` will create itself if need be. Version control wherever you want.

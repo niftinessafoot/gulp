@@ -31,6 +31,14 @@ gulp.task("html", function(){
     .pipe(browsersync.stream());
 });
 
+gulp.task("inc", function(){
+  //Same as HTML, but does not call `changed`—picks up all include file updates.
+  gulp.src(paths.html.in)
+    .pipe(include())
+    .pipe(gulp.dest(paths.html.out))
+    .pipe(browsersync.stream());
+});
+
 gulp.task("js", function(){
     gulp.src(paths.js.in)
     .pipe(changed(paths.js.out))

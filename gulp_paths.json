@@ -1,6 +1,6 @@
 {
   "html": {
-    "in": "src/**/*.html",
+    "in": ["src/**/*.html", "!src/inc/**"],
     "out": "dist"
   },
   "img": {
@@ -18,5 +18,8 @@
   "sass": {
     "in": "src/scss/**/*.scss",
     "out": "dist/css"
+  },
+  "inc": {
+    "in": "src/inc/**"
   }
 }
