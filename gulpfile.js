@@ -42,8 +42,10 @@ gulp.task("inc", function(){
 gulp.task("js", function(){
     gulp.src(paths.js.in)
     .pipe(changed(paths.js.out))
-    .pipe(sourcemaps.init())
-    .pipe(uglify())
+    .pipe(include()) // Uglify mucks up the sourcemaps when included files part of the sourcemap.
+                     // https://github.com/terinjokes/gulp-uglify/issues/105
+    .pipe(sourcemaps.init({loadMaps : true}))
+    // .pipe(uglify())
     .on('error',notify.onError(function(obj){
         return obj.message + " line " + obj.lineNumber;
       }))
