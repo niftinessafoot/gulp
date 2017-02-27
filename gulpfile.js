@@ -1,3 +1,5 @@
+var localPath = process.env.PWD;
+
 var gulp = require('gulp'),
   gutil = require('gulp-util'),
   notify = require('gulp-notify'),
@@ -8,11 +10,20 @@ var gulp = require('gulp'),
   uglify = require('gulp-uglify'),
   include = require('gulp-include'),
   browsersync = require('browser-sync').create(),
-  debug = require('gulp-debug'), //Not active use.
-  paths = require('./gulp_paths.json'),
-  miscPaths = require('./gulp_misc_paths.json');
+  debug = require('gulp-debug'); //Not active use.
+
+var paths = require('./gulp_paths.json'),
+  miscPaths = require('./gulp_misc_paths.json'),
+  localConfig = false;
 
 var watcherArray = Object.keys(paths); //append as needed
+
+try{
+  localConfig = require(localPath + '/gulpConfig.json');
+}
+catch(e){
+  gutil.log("No local config.");
+}
 
 gulp.task("sass", function(){
   return sass(paths.sass.in, {style : 'compressed', sourcemap : true})
