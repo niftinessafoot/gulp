@@ -1,5 +1,3 @@
-var localPath = process.env.PWD;
-
 var gulp = require('gulp'),
   gutil = require('gulp-util'),
   notify = require('gulp-notify'),
@@ -14,9 +12,13 @@ var gulp = require('gulp'),
 
 var paths = require('./gulp_paths.json'),
   miscPaths = require('./gulp_misc_paths.json'),
-  localConfig = false;
+  watcherArray = Object.keys(paths), //append as needed
+  localPath = process.env.PWD,
+  localConfig = {};
 
-var watcherArray = Object.keys(paths); //append as needed
+var flags = {
+  needsBabel : false
+};
 
 try{
   localConfig = require(localPath + '/gulpConfig.json');
@@ -24,6 +26,14 @@ try{
 catch(e){
   gutil.log("No local config.");
 }
+
+for (var key in flags){
+  if(localConfig.hasOwnProperty(key)){
+    flags[key] = localConfig[key];
+  }
+}
+
+gutil.log(flags);
 
 gulp.task("sass", function(){
   return sass(paths.sass.in, {style : 'compressed', sourcemap : true})
@@ -34,6 +44,13 @@ gulp.task("sass", function(){
   .pipe(browsersync.stream({match : miscPaths.notmaps}));
 });
 
+gulp.task("sass_inc", function(){
+  return sass('src/inc/**/*.scss', {style : 'compressed'})
+  .on('error',sass.logError)
+  .pipe(autoprefixer())
+  .pipe(gulp.dest('src/inc'));
+});
+
 gulp.task("html", function(){
   gulp.src(paths.html.in)
     .pipe(changed(paths.html.out))
@@ -42,7 +59,7 @@ gulp.task("html", function(){
     .pipe(browsersync.stream());
 });
 
-gulp.task("inc", function(){
+gulp.task("inc",['sass_inc'], function(){
   //Same as HTML, but does not call `changed`—picks up all include file updates.
   gulp.src(paths.html.in)
     .pipe(include())
@@ -53,10 +70,10 @@ gulp.task("inc", function(){
 gulp.task("js", function(){
     gulp.src(paths.js.in)
     .pipe(changed(paths.js.out))
-    .pipe(include()) // Uglify mucks up the sourcemaps when included files part of the sourcemap.
+    // .pipe(include()) // Uglify mucks up the sourcemaps when included files part of the sourcemap.
                      // https://github.com/terinjokes/gulp-uglify/issues/105
     .pipe(sourcemaps.init({loadMaps : true}))
-    // .pipe(uglify())
+    // .pipe(uglify()) //does not support ES6. Find a fix
     .on('error',notify.onError(function(obj){
         return obj.message + " line " + obj.lineNumber;
       }))

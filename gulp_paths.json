@@ -12,7 +12,7 @@
     "out": "dist/js"
   },
   "misc": {
-    "in": "src/**/*.{txt,ico,mp3,woff,woff2,ttf,json}",
+    "in": "src/**/*.{txt,ico,mp3,woff,woff2,ttf,json,mp4,mp3}",
     "out": "dist"
   },
   "sass": {
