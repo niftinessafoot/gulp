@@ -92,7 +92,7 @@ function watcher(cb) {
 }
 
 function sync(cb) {
-  browsersync.init({ server: miscPaths.sync, open: false });
+  browsersync.init({ server: miscPaths.sync, open: false, extensions:'html' });
   cb();
 }
 
