@@ -56,6 +56,7 @@ function misc() {
 
 function sass() {
   return src(paths.sass.in)
+    .pipe(changed(paths.sass.out,{extension:'.css'}))
     .pipe(gulpsass({ outputStyle: 'compressed' }))
     .pipe(gulpsass().on('error', gulpsass.logError))
     .pipe(sourcemaps.init())
