@@ -56,6 +56,7 @@ function misc() {
 
 function sass() {
   return src(paths.sass.in)
+    .pipe(changed(paths.sass.out,{extension:'.css'}))
     .pipe(gulpsass({ outputStyle: 'compressed' }))
     .pipe(gulpsass().on('error', gulpsass.logError))
     .pipe(sourcemaps.init())
@@ -92,7 +93,7 @@ function watcher(cb) {
 }
 
 function sync(cb) {
-  browsersync.init({ server: miscPaths.sync, open: false });
+  browsersync.init({ server: miscPaths.sync, open: false, extensions:'html' });
   cb();
 }
 
