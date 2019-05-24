@@ -1,4 +1,3 @@
-
 const { src, dest, watch, series } = require('gulp'),
   browsersync = require('browser-sync').create(),
   include = require('gulp-include'),
@@ -18,76 +17,82 @@ const localPath = process.env.PWD,
 
 let localConfig = false;
 
-  function html(){
-    return src(paths.html.in)
+function html() {
+  return src(paths.html.in)
     .pipe(changed(paths.html.out))
     .pipe(include())
     .pipe(dest(paths.html.out))
     .pipe(browsersync.stream());
-  }
-
-function img(){
-  return src(paths.img.in)
-  .pipe(changed(paths.img.out))
-  .pipe(dest(paths.img.out))
-  .pipe(browsersync.stream());
 }
 
-function js(){
+function img() {
+  return src(paths.img.in)
+    .pipe(changed(paths.img.out))
+    .pipe(dest(paths.img.out))
+    .pipe(browsersync.stream());
+}
+
+function js() {
   return src(paths.js.in)
     .pipe(changed(paths.js.out))
     .pipe(include()) // Uglify mucks up the sourcemaps when included files part of the sourcemap.
-                     // https://github.com/terinjokes/gulp-uglify/issues/105
-    .pipe(sourcemaps.init({loadMaps : true}))
+    // https://github.com/terinjokes/gulp-uglify/issues/105
+    .pipe(sourcemaps.init({ loadMaps: true }))
     .pipe(uglify())
-    .on('error',notify.onError(function(obj){
-        return obj.message + " line " + obj.lineNumber;
-      }))
+    .on('error', notify.onError(function(obj) {
+      return `${obj.message} line ${obj.lineNumber}`;
+    }))
     .pipe(sourcemaps.write(miscPaths.maps))
     .pipe(dest(paths.js.out))
-    .pipe(browsersync.stream({match : miscPaths.notmaps}));
+    .pipe(browsersync.stream({ match: miscPaths.notmaps }));
 }
 
-function misc(cb){
+function misc() {
   return src(paths.misc.in)
     .pipe(changed(paths.misc.out))
     .pipe(dest(paths.misc.out))
     .pipe(browsersync.stream());
 }
 
-function sass(cb){
+function sass() {
   return src(paths.sass.in)
-    .pipe(gulpsass({outputStyle : 'compressed'}))
+    .pipe(gulpsass({ outputStyle: 'compressed' }))
     .pipe(gulpsass().on('error', gulpsass.logError))
     .pipe(sourcemaps.init())
     .pipe(autoprefixer())
     .pipe(sourcemaps.write(miscPaths.maps))
     .pipe(dest(paths.sass.out))
-    .pipe(browsersync.stream({match : miscPaths.notmaps}));
+    .pipe(browsersync.stream({ match: miscPaths.notmaps }));
 }
 
-function inc(){
+function inc() {
   return src(paths.html.in)
     .pipe(include())
     .pipe(dest(paths.html.out))
     .pipe(browsersync.stream());
 }
 
+const methods = { html, img, js, misc, sass, inc }
 
-const methods = {html, img, js, misc, sass, inc }
+function init(cb) {
+  for (let key in methods) {
+    methods[key].call();
+  }
+  cb();
+}
 
-function watcher(cb){
+function watcher(cb) {
   const keys = Object.keys(paths);
 
-  keys.map(key=>{
+  keys.map(key => {
     watch(paths[key].in, methods[key])
   });
 
   cb();
 }
 
-function sync(cb){
-  browsersync.init({ server: miscPaths.sync,open:false});
+function sync(cb) {
+  browsersync.init({ server: miscPaths.sync, open: false });
   cb();
 }
 
@@ -95,4 +100,4 @@ exports.sass = sass
 exports.js = js
 exports.watcher = watcher
 exports.html = html
-exports.default = series(watcher, sync);
+exports.default = series(init, watcher, sync);
