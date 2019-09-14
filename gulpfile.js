@@ -6,6 +6,7 @@ const { src, dest, watch, series } = require('gulp'),
   notify = require('gulp-notify'),
   autoprefixer = require('gulp-autoprefixer'),
   gulpsass = require('gulp-sass'),
+  sasspartials = require('gulp-sass-partials-imported'),
   changed = require('gulp-changed');
 
 gulpsass.compiler = require('node-sass');
@@ -57,7 +58,13 @@ function misc() {
 function sass() {
   return src(paths.sass.in)
     .pipe(changed(paths.sass.out,{extension:'.css'}))
-    .pipe(gulpsass({ outputStyle: 'compressed' }))
+    .pipe(sasspartials(miscPaths.sasspartials, miscPaths.sassinc))
+    .pipe(gulpsass({
+      outputStyle: 'compressed',
+      onError: (err)=>{
+        console.log({err});
+      }
+    }))
     .pipe(gulpsass().on('error', gulpsass.logError))
     .pipe(sourcemaps.init())
     .pipe(autoprefixer())

@@ -1,5 +1,7 @@
 {
   "maps": "../maps",
   "notmaps": "**/*.{js,css}",
-  "sync": "./dist"
+  "sync": "./dist",
+  "sasspartials": "./src/scss",
+  "sassinc": "./src/scss/partials"
 }
