@@ -5,14 +5,12 @@ Build files for my dev environments.
 ## bash script
 In `.bash_profile`, add the following function:
 ```bash
+export GULPFILE=/path/to/gulp/install
 serve(){
-    gulp ${2} --gulpfile ~/Projects/gulp/gulpfile.js --cwd ${1:-.}
+    gulp ${2} --gulpfile ${GULPFILE:-./gulpfile.js} --cwd ${1:-.}
 }
 ```
-This assumes two things:
-
-  * gulp is installed globally
-  * `~/Projects/gulp/gulpfile.js` is the gulpfile to run.
+This script assumes the bash variable `$GULPFILE` is set with a valid pointer to the gulpfile in this repo.
 
 ## directory structure
 Script assumes this directory structure:
