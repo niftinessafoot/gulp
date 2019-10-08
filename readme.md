@@ -16,6 +16,8 @@ serve(){
 ```
 This script assumes the bash variable `$GULPFILE` is set with a valid pointer to the gulpfile in this repo.
 
+I keep the `$GULPFILE` export in a system-specific exports file, which is why the two are separate.
+
 ## directory structure
 Script assumes this directory structure:
 ```
