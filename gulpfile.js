@@ -12,11 +12,8 @@ const { src, dest, watch, series } = require('gulp'),
 gulpsass.compiler = require('node-sass');
 
 
-const localPath = process.env.PWD,
-  paths = require('./gulp_paths.json'),
+const paths = require('./gulp_paths.json'),
   miscPaths = require('./gulp_misc_paths.json');
-
-let localConfig = false;
 
 function html() {
   return src(paths.html.in)
