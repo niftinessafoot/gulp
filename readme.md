@@ -5,11 +5,13 @@ Build files for my dev environments.
 ## bash script
 In `.bash_profile`, add the following function:
 ```bash
-serve(){ /usr/local/bin/gulp --gulpfile ~/Projects/gulp/gulpfile.js --cwd ${1:-.}; }
+serve(){
+    gulp ${2} --gulpfile ~/Projects/gulp/gulpfile.js --cwd ${1:-.}
+}
 ```
 This assumes two things:
 
-  * `/usr/local/bin/gulp` as the global gulp install.
+  * gulp is installed globally
   * `~/Projects/gulp/gulpfile.js` is the gulpfile to run.
 
 ## directory structure
